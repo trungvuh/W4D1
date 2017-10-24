@@ -36,7 +36,7 @@ class UsersController < ApplicationController
 
   def destroy
     user = find_user(:id)
-    if user.delete
+    if user && user.destroy
       render json: user
     else
       render plain: "Couldnt destroy user"
@@ -46,10 +46,10 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:name, :email)
+    params.require(:user).permit(:username)
   end
 
-  def find_user(id)
-    User.find_by(id => params[id])
+  def find_user(val)
+    User.find_by(val => params[val])
   end
 end
